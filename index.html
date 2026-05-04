@@ -29,7 +29,7 @@
     .grain-overlay::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");pointer-events:none;z-index:1}
     .nav-link{position:relative}.nav-link::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:#C68642;transition:width .3s ease}.nav-link:hover::after{width:100%}
     #mobile-menu{transition:max-height .4s ease,opacity .4s ease;max-height:0;opacity:0;overflow:hidden}#mobile-menu.open{max-height:400px;opacity:1}
-    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}.marquee-inner{display:flex;animation:marquee 22s linear infinite;white-space:nowrap}.marquee-inner:hover{animation-play-state:paused}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}.marquee-inner{display:flex;animation:marquee 12s linear infinite;white-space:nowrap}.marquee-inner:hover{animation-play-state:paused}
     #scroll-top{transition:opacity .3s ease,transform .3s ease}#scroll-top.hidden{opacity:0;pointer-events:none;transform:translateY(12px)}
   </style>
 </head>
@@ -50,10 +50,7 @@
       <img src="images/logo.png" alt="The Spot Specialty Coffee" class="w-10 h-10 object-contain flex-shrink-0" />
       <span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Specialty Coffee</span></span>
     </a>
-    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium"><li><a href="index.html" class="nav-link text-caramel transition-colors">Home</a></li><li><a href="about.html"   class="nav-link hover:text-cream transition-colors">About</a></li>
-      <li><a href="menu.html"    class="nav-link hover:text-cream transition-colors">Menu</a></li>
-      <li><a href="gallery.html" class="nav-link hover:text-cream transition-colors">Gallery</a></li>
-      <li><a href="contact.html" class="nav-link hover:text-cream transition-colors">Contact</a></li>
+    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium"><li><a href="index.html" class="nav-link text-caramel transition-colors">Home</a></li><li><a href="menu.html" class="nav-link hover:text-cream transition-colors">Menu</a></li><li><a href="gallery.html" class="nav-link hover:text-cream transition-colors">Gallery</a></li><li><a href="about.html" class="nav-link hover:text-cream transition-colors">About</a></li><li><a href="contact.html" class="nav-link hover:text-cream transition-colors">Contact</a></li>
     </ul>
     <a href="visit.html" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold font-sans hover:bg-caramel-light transition-colors">
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -65,10 +62,7 @@
     </button>
   </div>
   <div id="mobile-menu" class="md:hidden bg-espresso-dark border-t border-cream/10">
-    <ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm"><li><a href="index.html" class="block py-2.5 border-b border-cream/10">Home</a></li><li><a href="about.html"   class="block py-2.5 border-b border-cream/10">About</a></li>
-      <li><a href="menu.html"    class="block py-2.5 border-b border-cream/10">Menu</a></li>
-      <li><a href="gallery.html" class="block py-2.5 border-b border-cream/10">Gallery</a></li>
-      <li><a href="contact.html" class="block py-2.5">Contact</a></li>
+    <ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm"><li><a href="index.html" class="block py-2.5 border-b border-cream/10">Home</a></li><li><a href="menu.html" class="block py-2.5 border-b border-cream/10">Menu</a></li><li><a href="gallery.html" class="block py-2.5 border-b border-cream/10">Gallery</a></li><li><a href="about.html" class="block py-2.5 border-b border-cream/10">About</a></li><li><a href="contact.html" class="block py-2.5">Contact</a></li>
     </ul>
   </div>
 </nav>
@@ -232,6 +226,7 @@
 </script>
 </body>
 </html>
+
 
 
 

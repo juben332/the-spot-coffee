@@ -39,15 +39,12 @@
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-espresso/90 transition-all duration-300">
   <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
     <a href="index.html" class="flex items-center gap-2.5"><img src="images/logo.png" alt="The Spot Specialty Coffee" class="w-10 h-10 object-contain flex-shrink-0" /><span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Specialty Coffee</span></span></a>
-    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium"><li><a href="index.html" class="nav-link hover:text-cream transition-colors">Home</a></li><li><a href="about.html"   class="nav-link hover:text-cream transition-colors">About</a></li>
-      <li><a href="menu.html"    class="nav-link hover:text-cream transition-colors">Menu</a></li>
-      <li><a href="gallery.html" class="nav-link text-caramel transition-colors">Gallery</a></li>
-      <li><a href="contact.html" class="nav-link hover:text-cream transition-colors">Contact</a></li>
+    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium"><li><a href="index.html" class="nav-link hover:text-cream transition-colors">Home</a></li><li><a href="menu.html" class="nav-link hover:text-cream transition-colors">Menu</a></li><li><a href="gallery.html" class="nav-link text-caramel transition-colors">Gallery</a></li><li><a href="about.html" class="nav-link hover:text-cream transition-colors">About</a></li><li><a href="contact.html" class="nav-link hover:text-cream transition-colors">Contact</a></li>
     </ul>
     <a href="visit.html" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold font-sans hover:bg-caramel-light transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Find Us</a>
     <button id="hamburger" class="md:hidden text-cream p-1"><svg id="ham-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg><svg id="ham-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
   </div>
-  <div id="mobile-menu" class="md:hidden bg-espresso-dark border-t border-cream/10"><ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm"><li><a href="index.html" class="block py-2.5 border-b border-cream/10">Home</a></li><li><a href="about.html" class="block py-2.5 border-b border-cream/10">About</a></li><li><a href="menu.html" class="block py-2.5 border-b border-cream/10">Menu</a></li><li><a href="gallery.html" class="block py-2.5 border-b border-cream/10">Gallery</a></li><li><a href="contact.html" class="block py-2.5">Contact</a></li><li><a href="visit.html" class="block py-2.5 mt-1"><span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold w-full justify-center">📍 Find Us</span></a></li></ul></div>
+  <div id="mobile-menu" class="md:hidden bg-espresso-dark border-t border-cream/10"><ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm"><li><a href="index.html" class="block py-2.5 border-b border-cream/10">Home</a></li><li><a href="menu.html" class="block py-2.5 border-b border-cream/10">Menu</a></li><li><a href="gallery.html" class="block py-2.5 border-b border-cream/10">Gallery</a></li><li><a href="about.html" class="block py-2.5 border-b border-cream/10">About</a></li><li><a href="contact.html" class="block py-2.5">Contact</a></li><li><a href="visit.html" class="block py-2.5 mt-1"><span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold w-full justify-center">📍 Find Us</span></a></li></ul></div>
 </nav>
 
 <!-- PAGE HERO -->
@@ -105,6 +102,7 @@
   setTimeout(()=>{document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('visible')})},100);
 </script>
 </body></html>
+
 
 
 
