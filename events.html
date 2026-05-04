@@ -21,6 +21,14 @@
   </style>
 </head>
 <body>
+<!-- LOADING SCREEN -->
+<div id="page-loader" style="position:fixed;inset:0;z-index:9999;background:#251508;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity 0.5s ease,visibility 0.5s ease;">
+  <img src="images/logo.png" alt="The Spot Coffee" style="width:90px;height:90px;object-fit:contain;animation:ldr 1.6s ease-in-out infinite;" />
+  <p style="font-family:'Playfair Display',serif;color:#C68642;font-size:1rem;margin-top:14px;letter-spacing:0.25em;">THE SPOT COFFEE</p>
+  <style>@keyframes ldr{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.1);opacity:.7}}</style>
+</div>
+<script>window.addEventListener('load',function(){var l=document.getElementById('page-loader');l.style.opacity='0';l.style.visibility='hidden';setTimeout(function(){l.style.display='none'},550)});</script>
+
 <!-- NAV -->
 <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-espresso/90 transition-all duration-300">
   <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
@@ -105,4 +113,5 @@
   function handleNL(e){e.preventDefault();document.getElementById('nl-success').classList.remove('hidden');document.getElementById('nl-email').value=''}
 </script>
 </body></html>
+
 
