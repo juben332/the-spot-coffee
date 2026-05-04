@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visit Us — The Spot Coffee</title>
+  <link rel="icon" type="image/png" href="images/logo.png" /><link rel="apple-touch-icon" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{espresso:'#3B2417','espresso-light':'#5C3D2A','espresso-dark':'#251508',cream:'#F5EBDD','cream-dark':'#EDD9BE',caramel:'#C68642','caramel-light':'#E0A85A',mocha:'#7B4F2E'},fontFamily:{serif:['Playfair Display','Georgia','serif'],sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <style>
+    *{box-sizing:border-box}html{font-family:'Inter',sans-serif}body{background:#F5EBDD;color:#3B2417;overflow-x:hidden}
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .75s ease,transform .75s ease}.reveal-left.visible{opacity:1;transform:translateX(0)}
+    .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .75s ease,transform .75s ease}.reveal-right.visible{opacity:1;transform:translateX(0)}
+    .nav-blur{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .nav-link{position:relative}.nav-link::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:#C68642;transition:width .3s ease}.nav-link:hover::after{width:100%}
+    #mobile-menu{transition:max-height .4s ease,opacity .4s ease;max-height:0;opacity:0;overflow:hidden}#mobile-menu.open{max-height:400px;opacity:1}
+    input:focus,textarea:focus{outline:2px solid #C68642;outline-offset:2px}
+    .page-hero{padding-top:120px}
+  </style>
+</head>
+<body>
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-espresso/90 transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2.5"><img src="images/logo.png" alt="The Spot Coffee" class="w-10 h-10 object-contain flex-shrink-0" /><span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Coffee</span></span></a>
+    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium">
+      <li><a href="about.html"   class="nav-link hover:text-cream transition-colors">About</a></li>
+      <li><a href="menu.html"    class="nav-link hover:text-cream transition-colors">Menu</a></li>
+      <li><a href="gallery.html" class="nav-link hover:text-cream transition-colors">Gallery</a></li>
+      <li><a href="events.html"  class="nav-link hover:text-cream transition-colors">Events</a></li>
+      <li><a href="visit.html"   class="nav-link text-caramel transition-colors">Visit Us</a></li>
+      <li><a href="contact.html" class="nav-link hover:text-cream transition-colors">Contact</a></li>
+    </ul>
+    <a href="visit.html" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold font-sans hover:bg-caramel-light transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Find Us</a>
+    <button id="hamburger" class="md:hidden text-cream p-1"><svg id="ham-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg><svg id="ham-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+  </div>
+  <div id="mobile-menu" class="md:hidden bg-espresso-dark border-t border-cream/10"><ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm"><li><a href="about.html" class="block py-2.5 border-b border-cream/10">About</a></li><li><a href="menu.html" class="block py-2.5 border-b border-cream/10">Menu</a></li><li><a href="gallery.html" class="block py-2.5 border-b border-cream/10">Gallery</a></li><li><a href="events.html" class="block py-2.5 border-b border-cream/10">Events</a></li><li><a href="visit.html" class="block py-2.5 border-b border-cream/10">Visit Us</a></li><li><a href="contact.html" class="block py-2.5">Contact</a></li></ul></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero bg-espresso relative overflow-hidden pb-20">
+  <div class="relative z-10 max-w-3xl mx-auto px-6 text-center pt-14">
+    <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Find Us</p>
+    <h1 class="font-serif text-cream text-5xl md:text-6xl leading-tight">Come Visit The Spot</h1>
+  </div>
+</div>
+
+<!-- VISIT -->
+<section class="py-24 bg-cream-dark">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-10 items-start">
+      <div class="reveal-left rounded-2xl overflow-hidden shadow-xl">
+        <div class="bg-espresso/10 flex items-center justify-center h-80 rounded-2xl border-2 border-dashed border-espresso/20">
+          <div class="text-center px-8">
+            <svg class="w-12 h-12 text-caramel mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <p class="font-serif text-espresso text-xl mb-2">Embed Google Map Here</p>
+            <p class="font-sans text-mocha text-sm">Replace this block with your Google Maps embed iframe</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right space-y-7">
+        <div class="flex gap-5 items-start"><div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg></div><div><h4 class="font-serif text-espresso text-lg mb-1">Our Address</h4><p class="font-sans text-mocha text-sm leading-relaxed">123 Brewed Avenue, Corner Café Street<br>Your City, Philippines</p><a href="#" class="font-sans text-caramel text-xs mt-1 inline-block hover:underline">Get Directions →</a></div></div>
+        <div class="flex gap-5 items-start"><div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg></div><div><h4 class="font-serif text-espresso text-lg mb-1">Opening Hours</h4><div class="font-sans text-mocha text-sm space-y-1"><div class="flex justify-between gap-8"><span>Monday – Friday</span><span class="font-medium">7:00 AM – 9:00 PM</span></div><div class="flex justify-between gap-8"><span>Saturday</span><span class="font-medium">7:00 AM – 10:00 PM</span></div><div class="flex justify-between gap-8"><span>Sunday</span><span class="font-medium">8:00 AM – 8:00 PM</span></div></div></div></div>
+        <div class="flex gap-5 items-start"><div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></div><div><h4 class="font-serif text-espresso text-lg mb-1">Contact</h4><p class="font-sans text-mocha text-sm">+63 912 345 6789</p><p class="font-sans text-mocha text-sm">hello@thespotcoffee.ph</p></div></div>
+        <div class="flex gap-5 items-start"><div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg></div><div><h4 class="font-serif text-espresso text-lg mb-1">Amenities</h4><div class="flex flex-wrap gap-2 mt-2"><span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Free Wi-Fi</span><span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Power Outlets</span><span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Air-Conditioned</span><span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Pet-Friendly</span><span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Takeaway</span></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-espresso-dark text-cream pt-16 pb-8">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+      <div class="sm:col-span-2 md:col-span-1"><div class="flex items-center gap-2.5 mb-4"><img src="images/logo.png" alt="The Spot Coffee" class="w-10 h-10 object-contain flex-shrink-0" /><span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Coffee</span></span></div><p class="font-sans text-cream/50 text-sm leading-relaxed">Where specialty coffee meets genuine community. Every cup, a conversation.</p></div>
+      <div><h4 class="font-serif text-cream text-lg mb-4">Quick Links</h4><ul class="font-sans text-cream/50 text-sm space-y-2.5"><li><a href="about.html" class="hover:text-caramel transition-colors">About Us</a></li><li><a href="menu.html" class="hover:text-caramel transition-colors">Our Menu</a></li><li><a href="gallery.html" class="hover:text-caramel transition-colors">Gallery</a></li><li><a href="events.html" class="hover:text-caramel transition-colors">Events</a></li><li><a href="visit.html" class="hover:text-caramel transition-colors">Visit Us</a></li></ul></div>
+      <div><h4 class="font-serif text-cream text-lg mb-4">Hours</h4><div class="font-sans text-cream/50 text-sm space-y-2.5"><div><p class="text-cream/80 font-medium">Mon – Fri</p><p>7:00 AM – 9:00 PM</p></div><div><p class="text-cream/80 font-medium">Saturday</p><p>7:00 AM – 10:00 PM</p></div><div><p class="text-cream/80 font-medium">Sunday</p><p>8:00 AM – 8:00 PM</p></div></div></div>
+      <div><h4 class="font-serif text-cream text-lg mb-4">Contact Us</h4><div class="font-sans text-cream/50 text-sm space-y-3"><p>123 Brewed Avenue<br>Corner Café Street<br>Your City, Philippines</p><p>+63 912 345 6789</p><p>hello@thespotcoffee.ph</p></div></div>
+    </div>
+    <div class="border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3"><p class="font-sans text-cream/30 text-xs">© 2024 The Spot Coffee. All rights reserved.</p><p class="font-sans text-cream/30 text-xs">Crafted with ☕ and love.</p></div>
+  </div>
+</footer>
+<script>
+  const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobile-menu'),hamOpen=document.getElementById('ham-open'),hamClose=document.getElementById('ham-close');
+  hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('open');hamOpen.classList.toggle('hidden');hamClose.classList.toggle('hidden')});
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+  window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('shadow-2xl',window.scrollY>50));
+  setTimeout(()=>{document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('visible')})},100);
+</script>
+</body></html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Events — The Spot Coffee</title>
+  <link rel="icon" type="image/png" href="images/logo.png" /><link rel="apple-touch-icon" href="images/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{colors:{espresso:'#3B2417','espresso-light':'#5C3D2A','espresso-dark':'#251508',cream:'#F5EBDD','cream-dark':'#EDD9BE',caramel:'#C68642','caramel-light':'#E0A85A',mocha:'#7B4F2E'},fontFamily:{serif:['Playfair Display','Georgia','serif'],sans:['Inter','system-ui','sans-serif']}}}}</script>
+  <style>
+    *{box-sizing:border-box}html{font-family:'Inter',sans-serif}body{background:#F5EBDD;color:#3B2417;overflow-x:hidden}
+    .reveal{opacity:0;transform:translateY(32px);transition:opacity .75s ease,transform .75s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-left{opacity:0;transform:translateX(-40px);transition:opacity .75s ease,transform .75s ease}.reveal-left.visible{opacity:1;transform:translateX(0)}
+    .reveal-right{opacity:0;transform:translateX(40px);transition:opacity .75s ease,transform .75s ease}.reveal-right.visible{opacity:1;transform:translateX(0)}
+    .nav-blur{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+    .grain-overlay::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");pointer-events:none;z-index:1}
+    .nav-link{position:relative}.nav-link::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:2px;background:#C68642;transition:width .3s ease}.nav-link:hover::after{width:100%}
+    #mobile-menu{transition:max-height .4s ease,opacity .4s ease;max-height:0;opacity:0;overflow:hidden}#mobile-menu.open{max-height:400px;opacity:1}
+    .page-hero{padding-top:120px}
+  </style>
+</head>
+<body>
+<!-- NAV -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-espresso/90 transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2.5"><img src="images/logo.png" alt="The Spot Coffee" class="w-10 h-10 object-contain flex-shrink-0" /><span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Coffee</span></span></a>
+    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium">
+      <li><a href="about.html"   class="nav-link hover:text-cream transition-colors">About</a></li>
+      <li><a href="menu.html"    class="nav-link hover:text-cream transition-colors">Menu</a></li>
+      <li><a href="gallery.html" class="nav-link hover:text-cream transition-colors">Gallery</a></li>
+      <li><a href="events.html"  class="nav-link text-caramel transition-colors">Events</a></li>
+      <li><a href="visit.html"   class="nav-link hover:text-cream transition-colors">Visit Us</a></li>
+      <li><a href="contact.html" class="nav-link hover:text-cream transition-colors">Contact</a></li>
+    </ul>
+    <a href="visit.html" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold font-sans hover:bg-caramel-light transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>Find Us</a>
+    <button id="hamburger" class="md:hidden text-cream p-1"><svg id="ham-open" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg><svg id="ham-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+  </div>
+  <div id="mobile-menu" class="md:hidden bg-espresso-dark border-t border-cream/10"><ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm"><li><a href="about.html" class="block py-2.5 border-b border-cream/10">About</a></li><li><a href="menu.html" class="block py-2.5 border-b border-cream/10">Menu</a></li><li><a href="gallery.html" class="block py-2.5 border-b border-cream/10">Gallery</a></li><li><a href="events.html" class="block py-2.5 border-b border-cream/10">Events</a></li><li><a href="visit.html" class="block py-2.5 border-b border-cream/10">Visit Us</a></li><li><a href="contact.html" class="block py-2.5">Contact</a></li></ul></div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero bg-espresso grain-overlay relative overflow-hidden pb-20">
+  <div class="relative z-10 max-w-3xl mx-auto px-6 text-center pt-14">
+    <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Events & Happenings</p>
+    <h1 class="font-serif text-cream text-5xl md:text-6xl leading-tight">What's On</h1>
+  </div>
+</div>
+
+<!-- EVENTS -->
+<section class="py-24 bg-espresso relative overflow-hidden grain-overlay">
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+      <div class="reveal-left">
+        <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">More Than Coffee</p>
+        <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight mb-6">The Spot Is More<br>Than Just Coffee</h2>
+        <p class="font-sans text-cream/70 text-base leading-relaxed mb-8">We host regular events that bring our community together. From cupping sessions and latte art competitions to acoustic nights and local art showcases — there's always something happening here.</p>
+        <div class="space-y-5">
+          <div class="flex gap-4 items-start"><div class="w-12 h-12 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></div><div><h4 class="font-serif text-cream text-lg mb-1">Open Mic Fridays</h4><p class="font-sans text-cream/60 text-sm">Every other Friday, 6–9 PM. Acoustic sets, spoken word, and original music. Free entry.</p></div></div>
+          <div class="flex gap-4 items-start"><div class="w-12 h-12 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div><div><h4 class="font-serif text-cream text-lg mb-1">Coffee Cupping Sessions</h4><p class="font-sans text-cream/60 text-sm">Monthly Saturday mornings. Taste and explore three single origins guided by our head barista. ₱350/seat.</p></div></div>
+          <div class="flex gap-4 items-start"><div class="w-12 h-12 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0"><svg class="w-6 h-6 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg></div><div><h4 class="font-serif text-cream text-lg mb-1">Private Event Bookings</h4><p class="font-sans text-cream/60 text-sm">Celebrations, team outings, or intimate gatherings. We can host up to 40 guests. Reach out to reserve.</p></div></div>
+        </div>
+        <a href="contact.html" class="inline-flex items-center gap-2 mt-8 px-7 py-3 bg-caramel text-espresso font-semibold font-sans rounded-full hover:bg-caramel-light transition-colors text-sm">Book an Event</a>
+      </div>
+      <div class="reveal-right"><img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=700&q=80" alt="Coffee event" class="rounded-2xl w-full h-96 object-cover shadow-2xl" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="py-20 relative overflow-hidden" style="background:url('https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=1200&q=80') center/cover no-repeat;">
+  <div class="absolute inset-0 bg-espresso/85"></div>
+  <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+    <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3 reveal">Stay in the Loop</p>
+    <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight mb-5 reveal" style="transition-delay:.1s">First to Know.<br>First to Sip.</h2>
+    <p class="font-sans text-cream/70 text-base mb-8 reveal" style="transition-delay:.2s">Join our newsletter and get early access to seasonal menu launches, event invites, exclusive promos, and behind-the-scenes stories from our baristas.</p>
+    <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto reveal" style="transition-delay:.3s" onsubmit="handleNL(event)">
+      <input type="email" id="nl-email" placeholder="your@email.com" class="flex-1 px-5 py-3.5 rounded-full bg-cream/10 border border-cream/20 text-cream placeholder-cream/40 font-sans text-sm" required />
+      <button type="submit" class="px-7 py-3.5 bg-caramel text-espresso font-semibold font-sans rounded-full hover:bg-caramel-light transition-colors text-sm whitespace-nowrap">Subscribe Free</button>
+    </form>
+    <p id="nl-success" class="hidden font-sans text-caramel text-sm mt-4">✓ You're in! Welcome to The Spot family.</p>
+    <p class="font-sans text-cream/40 text-xs mt-4">No spam, ever. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-espresso-dark text-cream pt-16 pb-8">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+      <div class="sm:col-span-2 md:col-span-1"><div class="flex items-center gap-2.5 mb-4"><img src="images/logo.png" alt="The Spot Coffee" class="w-10 h-10 object-contain flex-shrink-0" /><span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Coffee</span></span></div><p class="font-sans text-cream/50 text-sm leading-relaxed">Where specialty coffee meets genuine community. Every cup, a conversation.</p></div>
+      <div><h4 class="font-serif text-cream text-lg mb-4">Quick Links</h4><ul class="font-sans text-cream/50 text-sm space-y-2.5"><li><a href="about.html" class="hover:text-caramel transition-colors">About Us</a></li><li><a href="menu.html" class="hover:text-caramel transition-colors">Our Menu</a></li><li><a href="gallery.html" class="hover:text-caramel transition-colors">Gallery</a></li><li><a href="events.html" class="hover:text-caramel transition-colors">Events</a></li><li><a href="visit.html" class="hover:text-caramel transition-colors">Visit Us</a></li></ul></div>
+      <div><h4 class="font-serif text-cream text-lg mb-4">Hours</h4><div class="font-sans text-cream/50 text-sm space-y-2.5"><div><p class="text-cream/80 font-medium">Mon – Fri</p><p>7:00 AM – 9:00 PM</p></div><div><p class="text-cream/80 font-medium">Saturday</p><p>7:00 AM – 10:00 PM</p></div><div><p class="text-cream/80 font-medium">Sunday</p><p>8:00 AM – 8:00 PM</p></div></div></div>
+      <div><h4 class="font-serif text-cream text-lg mb-4">Contact Us</h4><div class="font-sans text-cream/50 text-sm space-y-3"><p>123 Brewed Avenue<br>Corner Café Street<br>Your City, Philippines</p><p>+63 912 345 6789</p><p>hello@thespotcoffee.ph</p></div></div>
+    </div>
+    <div class="border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3"><p class="font-sans text-cream/30 text-xs">© 2024 The Spot Coffee. All rights reserved.</p><p class="font-sans text-cream/30 text-xs">Crafted with ☕ and love.</p></div>
+  </div>
+</footer>
+<script>
+  const hamburger=document.getElementById('hamburger'),mobileMenu=document.getElementById('mobile-menu'),hamOpen=document.getElementById('ham-open'),hamClose=document.getElementById('ham-close');
+  hamburger.addEventListener('click',()=>{mobileMenu.classList.toggle('open');hamOpen.classList.toggle('hidden');hamClose.classList.toggle('hidden')});
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.12});
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>obs.observe(el));
+  window.addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('shadow-2xl',window.scrollY>50));
+  setTimeout(()=>{document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('visible')})},100);
+  function handleNL(e){e.preventDefault();document.getElementById('nl-success').classList.remove('hidden');document.getElementById('nl-email').value=''}
+</script>
+</body></html>
