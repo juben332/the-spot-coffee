@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Spot Coffee — Your Third-Wave Specialty Café</title>
+  <meta name="description" content="The Spot Coffee is a specialty coffee shop where every cup is a craft. Visit us for single-origin espresso, seasonal drinks, and a warm community space." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            espresso:  '#3B2417',
+            'espresso-light': '#5C3D2A',
+            'espresso-dark':  '#251508',
+            cream:     '#F5EBDD',
+            'cream-dark':    '#EDD9BE',
+            caramel:   '#C68642',
+            'caramel-light': '#E0A85A',
+            mocha:     '#7B4F2E',
+            latte:     '#D4A574',
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'Georgia', 'serif'],
+            sans:  ['Inter', 'system-ui', 'sans-serif'],
+          },
+          backgroundImage: {
+            'grain': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E\")",
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* ── Base ── */
+    * { box-sizing: border-box; }
+    html { font-family: 'Inter', sans-serif; }
+    body { background: #F5EBDD; color: #3B2417; overflow-x: hidden; }
+
+    /* ── Scroll-reveal ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left  { opacity: 0; transform: translateX(-40px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(40px);  transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+    .reveal-scale { opacity: 0; transform: scale(0.92); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-scale.visible { opacity: 1; transform: scale(1); }
+
+    /* ── Parallax hero ── */
+    .hero-parallax { background-attachment: fixed; }
+    @media (max-width: 768px) { .hero-parallax { background-attachment: scroll; } }
+
+    /* ── Nav blur ── */
+    .nav-blur { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+    /* ── Grain overlay ── */
+    .grain-overlay::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1;
+    }
+
+    /* ── Decorative dividers ── */
+    .wave-divider svg { display: block; }
+
+    /* ── Menu card hover ── */
+    .menu-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .menu-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(59,36,23,0.18); }
+
+    /* ── Gallery grid ── */
+    .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .gallery-grid .wide { grid-column: span 2; }
+    .gallery-grid .tall { grid-row: span 2; }
+    @media (max-width: 640px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid .wide { grid-column: span 2; }
+      .gallery-grid .tall { grid-row: span 1; }
+    }
+
+    /* ── Testimonial card ── */
+    .testimonial-card { border-left: 3px solid #C68642; }
+
+    /* ── FAQ accordion ── */
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+    .faq-answer.open { max-height: 300px; }
+    .faq-icon { transition: transform 0.3s ease; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* ── Smooth underline nav links ── */
+    .nav-link { position: relative; }
+    .nav-link::after {
+      content: ''; position: absolute; left: 0; bottom: -2px;
+      width: 0; height: 2px; background: #C68642;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after { width: 100%; }
+
+    /* ── Mobile nav ── */
+    #mobile-menu { transition: max-height 0.4s ease, opacity 0.4s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 400px; opacity: 1; }
+
+    /* ── Marquee ── */
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-inner { display: flex; animation: marquee 22s linear infinite; white-space: nowrap; }
+    .marquee-inner:hover { animation-play-state: paused; }
+
+    /* ── Star rating ── */
+    .stars { color: #C68642; letter-spacing: 2px; }
+
+    /* ── Input focus ── */
+    input:focus, textarea:focus { outline: 2px solid #C68642; outline-offset: 2px; }
+
+    /* ── Scroll to top btn ── */
+    #scroll-top { transition: opacity 0.3s ease, transform 0.3s ease; }
+    #scroll-top.hidden { opacity: 0; pointer-events: none; transform: translateY(12px); }
+  </style>
+</head>
+
+<body>
+
+<!-- ═══════════════════════════════════════
+     1. NAVIGATION
+═══════════════════════════════════════ -->
+<nav id="navbar" class="fixed top-0 left-0 right-0 z-50 nav-blur bg-espresso/90 transition-all duration-300">
+  <div class="max-w-6xl mx-auto px-5 py-3 flex items-center justify-between">
+    <!-- Logo -->
+    <a href="#hero" class="flex items-center gap-2.5 group">
+      <div class="w-9 h-9 rounded-full bg-caramel flex items-center justify-center flex-shrink-0 group-hover:bg-caramel-light transition-colors">
+        <svg class="w-5 h-5 text-espresso" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21h18v-2H2v2zm6-4h2v-2H8v2zm3 0h2v-2h-2v2zm3 0h2v-2h-2v2zM20 3H4C2.9 3 2 3.9 2 5v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 9c-2.76 0-5-2.24-5-5h10c0 2.76-2.24 5-5 5z"/></svg>
+      </div>
+      <span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Coffee</span></span>
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden md:flex items-center gap-7 text-sm text-cream/80 font-sans font-medium">
+      <li><a href="#about"         class="nav-link hover:text-cream transition-colors">About</a></li>
+      <li><a href="#menu"          class="nav-link hover:text-cream transition-colors">Menu</a></li>
+      <li><a href="#gallery"       class="nav-link hover:text-cream transition-colors">Gallery</a></li>
+      <li><a href="#events"        class="nav-link hover:text-cream transition-colors">Events</a></li>
+      <li><a href="#visit"         class="nav-link hover:text-cream transition-colors">Visit Us</a></li>
+      <li><a href="#contact"       class="nav-link hover:text-cream transition-colors">Contact</a></li>
+    </ul>
+
+    <!-- CTA desktop -->
+    <a href="#visit" class="hidden md:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-caramel text-espresso text-sm font-semibold font-sans hover:bg-caramel-light transition-colors">
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      Find Us
+    </a>
+
+    <!-- Hamburger -->
+    <button id="hamburger" class="md:hidden text-cream p-1" aria-label="Toggle menu">
+      <svg id="ham-open"  class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg id="ham-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="md:hidden bg-espresso-dark border-t border-cream/10">
+    <ul class="flex flex-col py-3 px-5 gap-1 text-cream/90 font-sans text-sm">
+      <li><a href="#about"       class="block py-2.5 border-b border-cream/10" onclick="closeMobile()">About</a></li>
+      <li><a href="#menu"        class="block py-2.5 border-b border-cream/10" onclick="closeMobile()">Menu</a></li>
+      <li><a href="#gallery"     class="block py-2.5 border-b border-cream/10" onclick="closeMobile()">Gallery</a></li>
+      <li><a href="#events"      class="block py-2.5 border-b border-cream/10" onclick="closeMobile()">Events</a></li>
+      <li><a href="#visit"       class="block py-2.5 border-b border-cream/10" onclick="closeMobile()">Visit Us</a></li>
+      <li><a href="#contact"     class="block py-2.5 border-b border-cream/10" onclick="closeMobile()">Contact</a></li>
+      <li><a href="#newsletter"  class="block py-2.5" onclick="closeMobile()">Newsletter</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════
+     2. HERO
+═══════════════════════════════════════ -->
+<section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden grain-overlay hero-parallax"
+  style="background: url('https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1600&q=80') center/cover no-repeat;">
+
+  <!-- Dark overlay gradient -->
+  <div class="absolute inset-0 bg-gradient-to-b from-espresso-dark/70 via-espresso/60 to-espresso-dark/80 z-0"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 text-center px-6 max-w-3xl mx-auto">
+    <p class="font-sans text-caramel tracking-[0.25em] uppercase text-xs mb-4 reveal">Specialty Coffee · Est. 2021</p>
+    <h1 class="font-serif text-cream text-5xl md:text-7xl leading-tight mb-6 reveal" style="transition-delay:0.1s">
+      Where Every Cup<br><em class="text-caramel-light not-italic">Tells a Story</em>
+    </h1>
+    <p class="font-sans text-cream/80 text-lg md:text-xl max-w-xl mx-auto mb-10 reveal" style="transition-delay:0.2s">
+      Hand-crafted espresso drinks, single-origin pour-overs, and a warm space that feels like home — right in the heart of the city.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal" style="transition-delay:0.3s">
+      <a href="#menu" class="px-8 py-3.5 bg-caramel text-espresso font-semibold font-sans rounded-full hover:bg-caramel-light transition-colors text-sm tracking-wide">
+        Explore Our Menu
+      </a>
+      <a href="#about" class="px-8 py-3.5 border border-cream/40 text-cream font-sans rounded-full hover:border-cream hover:bg-cream/10 transition-colors text-sm tracking-wide">
+        Our Story
+      </a>
+    </div>
+
+    <!-- Scroll cue -->
+    <div class="mt-16 flex flex-col items-center gap-2 reveal" style="transition-delay:0.5s">
+      <span class="text-cream/40 font-sans text-xs tracking-widest">SCROLL</span>
+      <div class="w-px h-10 bg-gradient-to-b from-caramel to-transparent"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     3. MARQUEE STRIP
+═══════════════════════════════════════ -->
+<div class="bg-caramel overflow-hidden py-3">
+  <div class="marquee-inner">
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">☕ Single-Origin Espresso</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">🫧 Specialty Matcha</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">🍰 House-Made Pastries</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">🌿 Oat · Almond · Coconut Milk</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">☕ Single-Origin Espresso</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">🫧 Specialty Matcha</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">🍰 House-Made Pastries</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">🌿 Oat · Almond · Coconut Milk</span>
+    <span class="inline-block font-sans text-espresso text-sm font-semibold tracking-widest px-8">·</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     4. ABOUT
+═══════════════════════════════════════ -->
+<section id="about" class="py-24 bg-cream">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+
+      <!-- Image collage -->
+      <div class="relative reveal-left">
+        <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&q=80"
+             alt="The Spot Coffee interior"
+             class="rounded-2xl w-full h-96 object-cover shadow-2xl" />
+        <!-- floating badge -->
+        <div class="absolute -bottom-5 -right-5 bg-espresso text-cream rounded-2xl p-5 shadow-xl w-36 text-center">
+          <p class="font-serif text-3xl text-caramel">3+</p>
+          <p class="font-sans text-xs text-cream/70 mt-1 leading-tight">Years of Crafted Coffee</p>
+        </div>
+        <!-- small accent card -->
+        <div class="absolute -top-5 -left-5 bg-caramel rounded-xl p-4 shadow-lg hidden sm:block">
+          <svg class="w-8 h-8 text-espresso" fill="currentColor" viewBox="0 0 24 24"><path d="M20 3H4v10c0 2.21 1.79 4 4 4h6c2.21 0 4-1.79 4-4v-3h2c1.11 0 2-.89 2-2V5c0-1.11-.89-2-2-2zm0 5h-2V5h2v3z"/></svg>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="reveal-right">
+        <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Our Story</p>
+        <h2 class="font-serif text-espresso text-4xl md:text-5xl leading-tight mb-6">
+          A Corner Built<br>for <em>Coffee Lovers</em>
+        </h2>
+        <p class="font-sans text-mocha text-base leading-relaxed mb-5">
+          The Spot Coffee was born from a simple desire — to create a place where people could slow down, sip something exceptional, and feel at home. What started as a passion project became a neighborhood staple, one carefully poured cup at a time.
+        </p>
+        <p class="font-sans text-mocha text-base leading-relaxed mb-8">
+          We source our beans directly from small-batch farms in Benguet, Mt. Apo, and internationally from Ethiopia and Colombia — roasted fresh to preserve every nuance. Our baristas are trained not just as technicians, but as storytellers behind the bar.
+        </p>
+        <div class="flex flex-wrap gap-6">
+          <div>
+            <p class="font-serif text-caramel text-3xl">500+</p>
+            <p class="font-sans text-mocha text-sm">Happy customers a week</p>
+          </div>
+          <div>
+            <p class="font-serif text-caramel text-3xl">12</p>
+            <p class="font-sans text-mocha text-sm">Signature drinks</p>
+          </div>
+          <div>
+            <p class="font-serif text-caramel text-3xl">100%</p>
+            <p class="font-sans text-mocha text-sm">Ethically sourced beans</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     5. WHY US
+═══════════════════════════════════════ -->
+<section id="why-us" class="py-24 bg-espresso relative overflow-hidden grain-overlay">
+  <!-- Decorative background circles -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-espresso-light rounded-full opacity-20 blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 w-64 h-64 bg-caramel rounded-full opacity-10 blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Why Choose Us</p>
+      <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight">What Makes The Spot<br><em class="text-caramel">Different</em></h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Card 1 -->
+      <div class="reveal bg-espresso-light/50 border border-cream/10 rounded-2xl p-7 text-center hover:border-caramel/40 transition-colors" style="transition-delay:0s">
+        <div class="w-14 h-14 rounded-full bg-caramel/20 flex items-center justify-center mx-auto mb-5">
+          <svg class="w-7 h-7 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>
+        </div>
+        <h3 class="font-serif text-cream text-xl mb-3">Farm-Direct Beans</h3>
+        <p class="font-sans text-cream/60 text-sm leading-relaxed">We cut out the middleman. Our beans travel from farm to roaster to your cup — fresh, traceable, and full of character.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="reveal bg-espresso-light/50 border border-cream/10 rounded-2xl p-7 text-center hover:border-caramel/40 transition-colors" style="transition-delay:0.1s">
+        <div class="w-14 h-14 rounded-full bg-caramel/20 flex items-center justify-center mx-auto mb-5">
+          <svg class="w-7 h-7 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+        </div>
+        <h3 class="font-serif text-cream text-xl mb-3">Barista Artistry</h3>
+        <p class="font-sans text-cream/60 text-sm leading-relaxed">Our team trains rigorously. Every extraction, every steam, every pour is intentional — not an accident, a deliberate act of craft.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="reveal bg-espresso-light/50 border border-cream/10 rounded-2xl p-7 text-center hover:border-caramel/40 transition-colors" style="transition-delay:0.2s">
+        <div class="w-14 h-14 rounded-full bg-caramel/20 flex items-center justify-center mx-auto mb-5">
+          <svg class="w-7 h-7 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+        </div>
+        <h3 class="font-serif text-cream text-xl mb-3">Seasonal Menus</h3>
+        <p class="font-sans text-cream/60 text-sm leading-relaxed">We rotate specials every season so there's always something new to discover. Come back often — there's always a reason to.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="reveal bg-espresso-light/50 border border-cream/10 rounded-2xl p-7 text-center hover:border-caramel/40 transition-colors" style="transition-delay:0.3s">
+        <div class="w-14 h-14 rounded-full bg-caramel/20 flex items-center justify-center mx-auto mb-5">
+          <svg class="w-7 h-7 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <h3 class="font-serif text-cream text-xl mb-3">Community First</h3>
+        <p class="font-sans text-cream/60 text-sm leading-relaxed">The Spot is your third place — not home, not work, but somewhere better. Events, open mics, and study nights bring our people together.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     6. MENU
+═══════════════════════════════════════ -->
+<section id="menu" class="py-24 bg-cream-dark">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">What We Serve</p>
+      <h2 class="font-serif text-espresso text-4xl md:text-5xl leading-tight mb-4">Our Signature Menu</h2>
+      <p class="font-sans text-mocha text-base max-w-lg mx-auto">Every item crafted with care. Ask your barista for the story behind your drink — they'll love you for it.</p>
+    </div>
+
+    <!-- Category tabs -->
+    <div class="flex flex-wrap justify-center gap-3 mb-10 reveal">
+      <button onclick="filterMenu('all')"       class="menu-tab active-tab px-5 py-2 rounded-full font-sans text-sm font-medium transition-colors bg-espresso text-cream">All</button>
+      <button onclick="filterMenu('espresso')"  class="menu-tab px-5 py-2 rounded-full font-sans text-sm font-medium transition-colors bg-espresso/10 text-espresso hover:bg-espresso hover:text-cream">Espresso</button>
+      <button onclick="filterMenu('cold')"      class="menu-tab px-5 py-2 rounded-full font-sans text-sm font-medium transition-colors bg-espresso/10 text-espresso hover:bg-espresso hover:text-cream">Cold Drinks</button>
+      <button onclick="filterMenu('non-coffee')" class="menu-tab px-5 py-2 rounded-full font-sans text-sm font-medium transition-colors bg-espresso/10 text-espresso hover:bg-espresso hover:text-cream">Non-Coffee</button>
+      <button onclick="filterMenu('food')"      class="menu-tab px-5 py-2 rounded-full font-sans text-sm font-medium transition-colors bg-espresso/10 text-espresso hover:bg-espresso hover:text-cream">Food</button>
+    </div>
+
+    <!-- Menu grid -->
+    <div id="menu-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Espresso drinks -->
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="espresso" style="transition-delay:0s">
+        <img src="https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=500&q=80" alt="Signature Espresso" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">The Classic Espresso</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱95</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Double shot of our house blend — dark chocolate, subtle fruit, clean finish. For the purist.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-caramel/15 text-caramel text-xs rounded-full font-sans">Espresso</span>
+        </div>
+      </div>
+
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="espresso" style="transition-delay:0.05s">
+        <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=500&q=80" alt="Caramel Latte" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Spot Caramel Latte</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱145</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">House espresso with silky steamed milk, house-made caramel drizzle, and a salted top note.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-caramel/15 text-caramel text-xs rounded-full font-sans">Espresso</span>
+        </div>
+      </div>
+
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="espresso" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?w=500&q=80" alt="Flat White" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Velvet Flat White</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱135</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Ristretto shots with microfoam milk — rich, small, and dangerously smooth.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-caramel/15 text-caramel text-xs rounded-full font-sans">Espresso</span>
+        </div>
+      </div>
+
+      <!-- Cold drinks -->
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="cold" style="transition-delay:0s">
+        <img src="https://images.unsplash.com/photo-1517959105821-eaf2591984d2?w=500&q=80" alt="Cold Brew" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Overnight Cold Brew</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱150</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Steeped 18 hours. Smooth, full-bodied, low acidity — served over clear ice.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-sky-100 text-sky-700 text-xs rounded-full font-sans">Cold</span>
+        </div>
+      </div>
+
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="cold" style="transition-delay:0.05s">
+        <img src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=500&q=80" alt="Iced Caramel Macchiato" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Iced Vanilla Macchiato</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱160</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Layers of vanilla syrup, fresh milk, and espresso over ice. Beautiful to look at, better to drink.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-sky-100 text-sky-700 text-xs rounded-full font-sans">Cold</span>
+        </div>
+      </div>
+
+      <!-- Non-coffee -->
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="non-coffee" style="transition-delay:0s">
+        <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&q=80" alt="Matcha Latte" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Ceremonial Matcha</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱155</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Grade-A ceremonial matcha whisked with oat milk. Earthy, grassy, subtly sweet — a ritual in a cup.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-green-100 text-green-700 text-xs rounded-full font-sans">Non-Coffee</span>
+        </div>
+      </div>
+
+      <!-- Food -->
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="food" style="transition-delay:0s">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&q=80" alt="Croissant" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Almond Croissant</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱120</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Flaky, buttery, filled with rich almond cream. Baked fresh every morning until we run out.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-amber-100 text-amber-700 text-xs rounded-full font-sans">Pastry</span>
+        </div>
+      </div>
+
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="food" style="transition-delay:0.05s">
+        <img src="https://images.unsplash.com/photo-1602351447937-745cb720612f?w=500&q=80" alt="Avocado Toast" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Avo Sourdough Toast</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱195</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Thick-cut sourdough, smashed avocado, chili flakes, poached egg. The classic, done right.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-amber-100 text-amber-700 text-xs rounded-full font-sans">Food</span>
+        </div>
+      </div>
+
+      <div class="menu-item menu-card reveal bg-cream rounded-2xl overflow-hidden shadow-md" data-cat="food" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?w=500&q=80" alt="Cheesecake" class="w-full h-44 object-cover" />
+        <div class="p-5">
+          <div class="flex justify-between items-start mb-2">
+            <h3 class="font-serif text-espresso text-lg">Basque Cheesecake</h3>
+            <span class="font-sans text-caramel font-semibold text-sm">₱110</span>
+          </div>
+          <p class="font-sans text-mocha text-xs leading-relaxed">Burnt outside, silky inside. Our in-house baked cheesecake pairs perfectly with any espresso drink.</p>
+          <span class="inline-block mt-3 px-3 py-1 bg-amber-100 text-amber-700 text-xs rounded-full font-sans">Dessert</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- View full menu CTA -->
+    <div class="text-center mt-12 reveal">
+      <p class="font-sans text-mocha text-sm mb-4">Seasonal specials change monthly. Ask your barista what's new.</p>
+      <a href="#contact" class="inline-flex items-center gap-2 font-sans text-sm font-semibold text-caramel border-b border-caramel pb-0.5 hover:text-espresso hover:border-espresso transition-colors">
+        Inquire about private events or bulk orders
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     7. GALLERY
+═══════════════════════════════════════ -->
+<section id="gallery" class="py-24 bg-espresso-dark relative overflow-hidden grain-overlay">
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">The Spot Life</p>
+      <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight">A Glimpse Inside</h2>
+    </div>
+
+    <div class="gallery-grid">
+      <div class="wide reveal overflow-hidden rounded-2xl">
+        <img src="https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=800&q=80" alt="Coffee shop interior" class="w-full h-64 object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="tall reveal overflow-hidden rounded-2xl" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=500&q=80" alt="Barista at work" class="w-full h-full min-h-64 object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="reveal overflow-hidden rounded-2xl" style="transition-delay:0.15s">
+        <img src="https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?w=500&q=80" alt="Latte art" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="reveal overflow-hidden rounded-2xl" style="transition-delay:0.2s">
+        <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&q=80" alt="Coffee beans" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="wide reveal overflow-hidden rounded-2xl" style="transition-delay:0.25s">
+        <img src="https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?w=800&q=80" alt="Coffee shop table setup" class="w-full h-56 object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="reveal overflow-hidden rounded-2xl" style="transition-delay:0.3s">
+        <img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=500&q=80" alt="Pastry plate" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+    </div>
+
+    <p class="text-center font-sans text-cream/40 text-sm mt-8 reveal">
+      Follow <span class="text-caramel">@thespotcoffee</span> on Instagram for daily shots
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     8. TESTIMONIALS
+═══════════════════════════════════════ -->
+<section id="testimonials" class="py-24 bg-cream">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">What People Say</p>
+      <h2 class="font-serif text-espresso text-4xl md:text-5xl leading-tight">Regulars Speak</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="testimonial-card reveal bg-cream-dark rounded-2xl p-7" style="transition-delay:0s">
+        <div class="stars text-lg mb-4">★★★★★</div>
+        <p class="font-serif text-espresso text-lg italic leading-relaxed mb-6">"The Spot isn't just a coffee shop — it's where I start every single day. The baristas know my name, my order, and somehow always make it taste like the first time."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-caramel/30 flex items-center justify-center font-serif text-espresso font-bold">A</div>
+          <div>
+            <p class="font-sans text-espresso text-sm font-semibold">Andrea M.</p>
+            <p class="font-sans text-mocha text-xs">Regular since 2022</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal bg-cream-dark rounded-2xl p-7" style="transition-delay:0.1s">
+        <div class="stars text-lg mb-4">★★★★★</div>
+        <p class="font-serif text-espresso text-lg italic leading-relaxed mb-6">"I've been to coffee shops all over the metro but nothing hits like their cold brew. Clean, smooth, absolutely no bitterness. I always leave with an extra cup to go."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-caramel/30 flex items-center justify-center font-serif text-espresso font-bold">J</div>
+          <div>
+            <p class="font-sans text-espresso text-sm font-semibold">Justin R.</p>
+            <p class="font-sans text-mocha text-xs">Coffee enthusiast</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal bg-cream-dark rounded-2xl p-7" style="transition-delay:0.2s">
+        <div class="stars text-lg mb-4">★★★★★</div>
+        <p class="font-serif text-espresso text-lg italic leading-relaxed mb-6">"The ambiance alone is a 10. I bring clients here for meetings because it impresses every single time. Also — the almond croissant? Life-changing. Non-negotiable."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-caramel/30 flex items-center justify-center font-serif text-espresso font-bold">S</div>
+          <div>
+            <p class="font-sans text-espresso text-sm font-semibold">Samantha L.</p>
+            <p class="font-sans text-mocha text-xs">Freelance designer</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overall rating bar -->
+    <div class="mt-14 flex flex-col sm:flex-row items-center justify-center gap-10 reveal">
+      <div class="text-center">
+        <p class="font-serif text-espresso text-6xl">4.9</p>
+        <div class="stars text-xl my-2">★★★★★</div>
+        <p class="font-sans text-mocha text-sm">Google Reviews</p>
+      </div>
+      <div class="w-px h-20 bg-espresso/10 hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-serif text-espresso text-6xl">4.8</p>
+        <div class="stars text-xl my-2">★★★★★</div>
+        <p class="font-sans text-mocha text-sm">Facebook Reviews</p>
+      </div>
+      <div class="w-px h-20 bg-espresso/10 hidden sm:block"></div>
+      <div class="text-center">
+        <p class="font-serif text-espresso text-6xl">1.2k</p>
+        <div class="text-caramel text-xl my-2">❤ ❤ ❤</div>
+        <p class="font-sans text-mocha text-sm">Instagram Followers</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     9. EVENTS
+═══════════════════════════════════════ -->
+<section id="events" class="py-24 bg-espresso relative overflow-hidden grain-overlay">
+  <div class="relative z-10 max-w-6xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 gap-14 items-center">
+      <div class="reveal-left">
+        <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Events & Happenings</p>
+        <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight mb-6">The Spot Is More<br>Than Just Coffee</h2>
+        <p class="font-sans text-cream/70 text-base leading-relaxed mb-8">We host regular events that bring our community together. From cupping sessions and latte art competitions to acoustic nights and local art showcases — there's always something happening here.</p>
+
+        <div class="space-y-5">
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-serif text-cream text-lg mb-1">Open Mic Fridays</h4>
+              <p class="font-sans text-cream/60 text-sm">Every other Friday, 6–9 PM. Acoustic sets, spoken word, and original music. Free entry.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-serif text-cream text-lg mb-1">Coffee Cupping Sessions</h4>
+              <p class="font-sans text-cream/60 text-sm">Monthly Saturday mornings. Taste and explore three single origins guided by our head barista. ₱350/seat.</p>
+            </div>
+          </div>
+
+          <div class="flex gap-4 items-start">
+            <div class="w-12 h-12 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+            </div>
+            <div>
+              <h4 class="font-serif text-cream text-lg mb-1">Private Event Bookings</h4>
+              <p class="font-sans text-cream/60 text-sm">Celebrations, team outings, or intimate gatherings. We can host up to 40 guests. Reach out to reserve.</p>
+            </div>
+          </div>
+        </div>
+
+        <a href="#contact" class="inline-flex items-center gap-2 mt-8 px-7 py-3 bg-caramel text-espresso font-semibold font-sans rounded-full hover:bg-caramel-light transition-colors text-sm">
+          Book an Event
+        </a>
+      </div>
+
+      <!-- Event image -->
+      <div class="reveal-right">
+        <img src="https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=700&q=80"
+             alt="Coffee event"
+             class="rounded-2xl w-full h-96 object-cover shadow-2xl" />
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     10. NEWSLETTER CTA
+═══════════════════════════════════════ -->
+<section id="newsletter" class="py-20 relative overflow-hidden"
+  style="background: url('https://images.unsplash.com/photo-1504630083234-14187a9df0f5?w=1200&q=80') center/cover no-repeat;">
+  <div class="absolute inset-0 bg-espresso/85"></div>
+  <div class="relative z-10 max-w-2xl mx-auto px-6 text-center">
+    <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3 reveal">Stay in the Loop</p>
+    <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight mb-5 reveal" style="transition-delay:0.1s">
+      First to Know.<br>First to Sip.
+    </h2>
+    <p class="font-sans text-cream/70 text-base mb-8 reveal" style="transition-delay:0.2s">
+      Join our newsletter and get early access to seasonal menu launches, event invites, exclusive promos, and behind-the-scenes stories from our baristas.
+    </p>
+    <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto reveal" style="transition-delay:0.3s" onsubmit="handleNewsletter(event)">
+      <input
+        type="email"
+        id="nl-email"
+        placeholder="your@email.com"
+        class="flex-1 px-5 py-3.5 rounded-full bg-cream/10 border border-cream/20 text-cream placeholder-cream/40 font-sans text-sm focus:bg-cream/15"
+        required
+      />
+      <button type="submit" class="px-7 py-3.5 bg-caramel text-espresso font-semibold font-sans rounded-full hover:bg-caramel-light transition-colors text-sm whitespace-nowrap">
+        Subscribe Free
+      </button>
+    </form>
+    <p id="nl-success" class="hidden font-sans text-caramel text-sm mt-4">✓ You're in! Welcome to The Spot family.</p>
+    <p class="font-sans text-cream/40 text-xs mt-4 reveal" style="transition-delay:0.4s">No spam, ever. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     11. VISIT US
+═══════════════════════════════════════ -->
+<section id="visit" class="py-24 bg-cream-dark">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Find Us</p>
+      <h2 class="font-serif text-espresso text-4xl md:text-5xl leading-tight">Come Visit The Spot</h2>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10 items-start">
+      <!-- Map placeholder -->
+      <div class="reveal-left rounded-2xl overflow-hidden shadow-xl">
+        <div class="bg-espresso/10 flex items-center justify-center h-80 rounded-2xl border-2 border-dashed border-espresso/20">
+          <div class="text-center px-8">
+            <svg class="w-12 h-12 text-caramel mx-auto mb-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <p class="font-serif text-espresso text-xl mb-2">Embed Google Map Here</p>
+            <p class="font-sans text-mocha text-sm">Replace this block with your Google Maps embed iframe</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="reveal-right space-y-7">
+        <div class="flex gap-5 items-start">
+          <div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-serif text-espresso text-lg mb-1">Our Address</h4>
+            <p class="font-sans text-mocha text-sm leading-relaxed">123 Brewed Avenue, Corner Café Street<br>Your City, Philippines</p>
+            <a href="#" class="font-sans text-caramel text-xs mt-1 inline-block hover:underline">Get Directions →</a>
+          </div>
+        </div>
+
+        <div class="flex gap-5 items-start">
+          <div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-serif text-espresso text-lg mb-1">Opening Hours</h4>
+            <div class="font-sans text-mocha text-sm space-y-1">
+              <div class="flex justify-between gap-8"><span>Monday – Friday</span><span class="font-medium">7:00 AM – 9:00 PM</span></div>
+              <div class="flex justify-between gap-8"><span>Saturday</span><span class="font-medium">7:00 AM – 10:00 PM</span></div>
+              <div class="flex justify-between gap-8"><span>Sunday</span><span class="font-medium">8:00 AM – 8:00 PM</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex gap-5 items-start">
+          <div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-serif text-espresso text-lg mb-1">Contact</h4>
+            <p class="font-sans text-mocha text-sm">+63 912 345 6789</p>
+            <p class="font-sans text-mocha text-sm">hello@thespotcoffee.ph</p>
+          </div>
+        </div>
+
+        <div class="flex gap-5 items-start">
+          <div class="w-11 h-11 rounded-xl bg-caramel/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-5 h-5 text-caramel" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          </div>
+          <div>
+            <h4 class="font-serif text-espresso text-lg mb-1">Amenities</h4>
+            <div class="flex flex-wrap gap-2 mt-2">
+              <span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Free Wi-Fi</span>
+              <span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Power Outlets</span>
+              <span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Air-Conditioned</span>
+              <span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Pet-Friendly</span>
+              <span class="px-3 py-1 bg-espresso/10 text-espresso text-xs rounded-full font-sans">Takeaway</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     12. CONTACT
+═══════════════════════════════════════ -->
+<section id="contact" class="py-24 bg-cream">
+  <div class="max-w-3xl mx-auto px-6">
+    <div class="text-center mb-12 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Get in Touch</p>
+      <h2 class="font-serif text-espresso text-4xl md:text-5xl leading-tight mb-4">Let's Talk Coffee</h2>
+      <p class="font-sans text-mocha text-base">Whether it's a question, a booking request, or just to say hi — we'd love to hear from you.</p>
+    </div>
+
+    <form class="reveal space-y-5" onsubmit="handleContact(event)" style="transition-delay:0.1s">
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label class="font-sans text-espresso text-sm font-medium block mb-1.5">Your Name</label>
+          <input type="text" placeholder="Juan dela Cruz"
+            class="w-full px-5 py-3 rounded-xl bg-cream-dark border border-espresso/10 font-sans text-espresso text-sm placeholder-mocha/40"
+            required />
+        </div>
+        <div>
+          <label class="font-sans text-espresso text-sm font-medium block mb-1.5">Email Address</label>
+          <input type="email" placeholder="juan@email.com"
+            class="w-full px-5 py-3 rounded-xl bg-cream-dark border border-espresso/10 font-sans text-espresso text-sm placeholder-mocha/40"
+            required />
+        </div>
+      </div>
+      <div>
+        <label class="font-sans text-espresso text-sm font-medium block mb-1.5">Subject</label>
+        <select class="w-full px-5 py-3 rounded-xl bg-cream-dark border border-espresso/10 font-sans text-espresso text-sm">
+          <option>General Inquiry</option>
+          <option>Event Booking</option>
+          <option>Catering / Bulk Order</option>
+          <option>Press / Partnership</option>
+          <option>Feedback</option>
+        </select>
+      </div>
+      <div>
+        <label class="font-sans text-espresso text-sm font-medium block mb-1.5">Message</label>
+        <textarea rows="5" placeholder="Tell us more about what you need..."
+          class="w-full px-5 py-3 rounded-xl bg-cream-dark border border-espresso/10 font-sans text-espresso text-sm placeholder-mocha/40 resize-none"
+          required></textarea>
+      </div>
+      <button type="submit" class="w-full py-4 bg-espresso text-cream font-semibold font-sans rounded-xl hover:bg-espresso-light transition-colors text-sm tracking-wide">
+        Send Message
+      </button>
+      <p id="contact-success" class="hidden text-center font-sans text-caramel text-sm">✓ Message sent! We'll get back to you within 24 hours.</p>
+    </form>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     13. FAQ
+═══════════════════════════════════════ -->
+<section id="faq" class="py-24 bg-espresso-dark relative overflow-hidden grain-overlay">
+  <div class="relative z-10 max-w-3xl mx-auto px-6">
+    <div class="text-center mb-14 reveal">
+      <p class="font-sans text-caramel uppercase tracking-widest text-xs mb-3">Got Questions?</p>
+      <h2 class="font-serif text-cream text-4xl md:text-5xl leading-tight">Frequently Asked</h2>
+    </div>
+
+    <div class="space-y-3 reveal">
+      <div class="faq-item border border-cream/10 rounded-2xl overflow-hidden">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-4 text-left" onclick="toggleFaq(this)">
+          <span class="font-serif text-cream text-lg">Do you offer non-dairy milk alternatives?</span>
+          <span class="faq-icon text-caramel text-2xl font-light flex-shrink-0 ml-4">+</span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="font-sans text-cream/60 text-sm leading-relaxed pb-5">Yes! We carry oat milk, almond milk, and coconut milk as alternatives. All are available at no extra charge. Just ask your barista when ordering.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-cream/10 rounded-2xl overflow-hidden">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-4 text-left" onclick="toggleFaq(this)">
+          <span class="font-serif text-cream text-lg">Can I reserve a table or a spot?</span>
+          <span class="faq-icon text-caramel text-2xl font-light flex-shrink-0 ml-4">+</span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="font-sans text-cream/60 text-sm leading-relaxed pb-5">For groups of 5 or more, yes! Reach out through our Contact form or message us on Instagram. Individual tables are walk-in only. For private event bookings, full venue reservation is available.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-cream/10 rounded-2xl overflow-hidden">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-4 text-left" onclick="toggleFaq(this)">
+          <span class="font-serif text-cream text-lg">Do you sell your coffee beans?</span>
+          <span class="faq-icon text-caramel text-2xl font-light flex-shrink-0 ml-4">+</span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="font-sans text-cream/60 text-sm leading-relaxed pb-5">Absolutely. We sell 250g and 500g bags of our house blend and available single origins. Ground or whole bean — just specify. Retailing in-store only at the moment.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-cream/10 rounded-2xl overflow-hidden">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-4 text-left" onclick="toggleFaq(this)">
+          <span class="font-serif text-cream text-lg">Is The Spot coffee shop pet-friendly?</span>
+          <span class="faq-icon text-caramel text-2xl font-light flex-shrink-0 ml-4">+</span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="font-sans text-cream/60 text-sm leading-relaxed pb-5">We love furry friends! Pets are welcome in our outdoor seating area. Please keep them leashed and be considerate of other guests. Water bowls are available on request.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-cream/10 rounded-2xl overflow-hidden">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-4 text-left" onclick="toggleFaq(this)">
+          <span class="font-serif text-cream text-lg">Do you accept online orders or delivery?</span>
+          <span class="faq-icon text-caramel text-2xl font-light flex-shrink-0 ml-4">+</span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="font-sans text-cream/60 text-sm leading-relaxed pb-5">We're currently available on GrabFood and FoodPanda for delivery within a 3km radius. In-store and takeaway are also available. We do not accept pre-orders via phone at this time.</p>
+        </div>
+      </div>
+
+      <div class="faq-item border border-cream/10 rounded-2xl overflow-hidden">
+        <button class="faq-trigger w-full flex justify-between items-center px-6 py-4 text-left" onclick="toggleFaq(this)">
+          <span class="font-serif text-cream text-lg">Do you have a loyalty or rewards program?</span>
+          <span class="faq-icon text-caramel text-2xl font-light flex-shrink-0 ml-4">+</span>
+        </button>
+        <div class="faq-answer px-6">
+          <p class="font-sans text-cream/60 text-sm leading-relaxed pb-5">Yes — our Spot Card is a punch card. Every 10th drink is on us. Ask any barista for your card on your first visit. Newsletter subscribers also receive exclusive promo codes every month.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     14a. FINAL CTA
+═══════════════════════════════════════ -->
+<section class="py-28 bg-caramel relative overflow-hidden">
+  <!-- Decorative circles -->
+  <div class="absolute top-0 right-0 w-72 h-72 bg-espresso rounded-full opacity-10 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+  <div class="absolute bottom-0 left-0 w-48 h-48 bg-espresso-dark rounded-full opacity-10 translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
+
+  <div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+    <p class="font-sans text-espresso/60 uppercase tracking-widest text-xs mb-3 reveal">Your Invitation</p>
+    <h2 class="font-serif text-espresso text-4xl md:text-6xl leading-tight mb-6 reveal" style="transition-delay:0.1s">
+      Life Is Too Short<br>for Bad Coffee.
+    </h2>
+    <p class="font-sans text-espresso/70 text-lg mb-10 max-w-xl mx-auto reveal" style="transition-delay:0.2s">
+      Come sit with us. Try something new. Stay a little longer than you planned. That's the whole point of The Spot.
+    </p>
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 reveal" style="transition-delay:0.3s">
+      <a href="#visit" class="px-9 py-4 bg-espresso text-cream font-semibold font-sans rounded-full hover:bg-espresso-dark transition-colors text-sm tracking-wide">
+        Visit Us Today
+      </a>
+      <a href="#menu" class="px-9 py-4 border-2 border-espresso text-espresso font-semibold font-sans rounded-full hover:bg-espresso hover:text-cream transition-colors text-sm tracking-wide">
+        Browse the Menu
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════
+     14b. FOOTER
+═══════════════════════════════════════ -->
+<footer class="bg-espresso-dark text-cream pt-16 pb-8">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+
+      <!-- Brand -->
+      <div class="sm:col-span-2 md:col-span-1">
+        <div class="flex items-center gap-2.5 mb-4">
+          <div class="w-9 h-9 rounded-full bg-caramel flex items-center justify-center">
+            <svg class="w-5 h-5 text-espresso" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21h18v-2H2v2zm6-4h2v-2H8v2zm3 0h2v-2h-2v2zm3 0h2v-2h-2v2zM20 3H4C2.9 3 2 3.9 2 5v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 9c-2.76 0-5-2.24-5-5h10c0 2.76-2.24 5-5 5z"/></svg>
+          </div>
+          <span class="font-serif text-cream text-lg leading-tight">The Spot<br><span class="text-caramel text-xs font-sans tracking-widest uppercase">Coffee</span></span>
+        </div>
+        <p class="font-sans text-cream/50 text-sm leading-relaxed">Where specialty coffee meets genuine community. Every cup, a conversation.</p>
+        <!-- Social links -->
+        <div class="flex gap-4 mt-5">
+          <a href="#" class="w-9 h-9 rounded-full bg-cream/10 hover:bg-caramel hover:text-espresso flex items-center justify-center text-cream/60 transition-colors" aria-label="Instagram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full bg-cream/10 hover:bg-caramel hover:text-espresso flex items-center justify-center text-cream/60 transition-colors" aria-label="Facebook">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          </a>
+          <a href="#" class="w-9 h-9 rounded-full bg-cream/10 hover:bg-caramel hover:text-espresso flex items-center justify-center text-cream/60 transition-colors" aria-label="TikTok">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick links -->
+      <div>
+        <h4 class="font-serif text-cream text-lg mb-4">Quick Links</h4>
+        <ul class="font-sans text-cream/50 text-sm space-y-2.5">
+          <li><a href="#about"    class="hover:text-caramel transition-colors">About Us</a></li>
+          <li><a href="#menu"     class="hover:text-caramel transition-colors">Our Menu</a></li>
+          <li><a href="#gallery"  class="hover:text-caramel transition-colors">Gallery</a></li>
+          <li><a href="#events"   class="hover:text-caramel transition-colors">Events</a></li>
+          <li><a href="#visit"    class="hover:text-caramel transition-colors">Visit Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Hours -->
+      <div>
+        <h4 class="font-serif text-cream text-lg mb-4">Hours</h4>
+        <div class="font-sans text-cream/50 text-sm space-y-2.5">
+          <div><p class="text-cream/80 font-medium">Mon – Fri</p><p>7:00 AM – 9:00 PM</p></div>
+          <div><p class="text-cream/80 font-medium">Saturday</p><p>7:00 AM – 10:00 PM</p></div>
+          <div><p class="text-cream/80 font-medium">Sunday</p><p>8:00 AM – 8:00 PM</p></div>
+        </div>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <h4 class="font-serif text-cream text-lg mb-4">Contact Us</h4>
+        <div class="font-sans text-cream/50 text-sm space-y-3">
+          <p>123 Brewed Avenue<br>Corner Café Street<br>Your City, Philippines</p>
+          <p>+63 912 345 6789</p>
+          <p>hello@thespotcoffee.ph</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="border-t border-cream/10 pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-sans text-cream/30 text-xs">© 2024 The Spot Coffee. All rights reserved.</p>
+      <p class="font-sans text-cream/30 text-xs">Crafted with ☕ and love.</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ═══════════════════════════════════════
+     Scroll-to-top button
+═══════════════════════════════════════ -->
+<button id="scroll-top" class="hidden fixed bottom-6 right-6 w-11 h-11 rounded-full bg-caramel text-espresso shadow-lg flex items-center justify-center hover:bg-caramel-light transition-colors z-50"
+  onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">
+  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/></svg>
+</button>
+
+
+<!-- ═══════════════════════════════════════
+     JS
+═══════════════════════════════════════ -->
+<script>
+  /* ── Hamburger ── */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamOpen    = document.getElementById('ham-open');
+  const hamClose   = document.getElementById('ham-close');
+
+  hamburger.addEventListener('click', () => {
+    mobileMenu.classList.toggle('open');
+    hamOpen.classList.toggle('hidden');
+    hamClose.classList.toggle('hidden');
+  });
+
+  function closeMobile() {
+    mobileMenu.classList.remove('open');
+    hamOpen.classList.remove('hidden');
+    hamClose.classList.add('hidden');
+  }
+
+  /* ── Scroll-reveal (IntersectionObserver) ── */
+  const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  const observer  = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealEls.forEach(el => observer.observe(el));
+
+  /* ── Navbar shadow on scroll ── */
+  window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 50) {
+      nav.classList.add('shadow-2xl');
+    } else {
+      nav.classList.remove('shadow-2xl');
+    }
+
+    /* scroll-to-top btn */
+    const btn = document.getElementById('scroll-top');
+    if (window.scrollY > 500) {
+      btn.classList.remove('hidden');
+    } else {
+      btn.classList.add('hidden');
+    }
+  });
+
+  /* ── Menu filter tabs ── */
+  function filterMenu(cat) {
+    const items = document.querySelectorAll('.menu-item');
+    const tabs  = document.querySelectorAll('.menu-tab');
+
+    tabs.forEach(t => {
+      t.classList.remove('bg-espresso', 'text-cream', 'active-tab');
+      t.classList.add('bg-espresso/10', 'text-espresso');
+    });
+
+    const activeTab = [...tabs].find(t => t.onclick?.toString().includes(`'${cat}'`));
+    if (activeTab) {
+      activeTab.classList.add('bg-espresso', 'text-cream');
+      activeTab.classList.remove('bg-espresso/10', 'text-espresso');
+    }
+
+    items.forEach(item => {
+      if (cat === 'all' || item.dataset.cat === cat) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  /* ── FAQ accordion ── */
+  function toggleFaq(btn) {
+    const item   = btn.closest('.faq-item');
+    const answer = item.querySelector('.faq-answer');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.faq-item.open').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-answer').classList.remove('open');
+    });
+
+    // Open clicked if it was closed
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+
+  /* ── Newsletter form ── */
+  function handleNewsletter(e) {
+    e.preventDefault();
+    document.getElementById('nl-success').classList.remove('hidden');
+    document.getElementById('nl-email').value = '';
+  }
+
+  /* ── Contact form ── */
+  function handleContact(e) {
+    e.preventDefault();
+    document.getElementById('contact-success').classList.remove('hidden');
+    e.target.reset();
+  }
+
+  /* ── Trigger reveals for visible elements on load ── */
+  setTimeout(() => {
+    revealEls.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        el.classList.add('visible');
+      }
+    });
+  }, 100);
+</script>
+
+</body>
+</html>
